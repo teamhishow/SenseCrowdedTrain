@@ -11,10 +11,15 @@ Bleacon.on('discover', function(bleacon) {
 setInterval(function(){
     Bleacon.stopAdvertising();
     //ファイルを取得
-    let conjestion = fs.readFileSync("../log.txt", 'utf-8');
-    let terms = conjestion.split(',');
-    let major = Number(terms[0] + terms[1] + terms[2]);
-    let minor = Number(terms[3]);
-    Bleacon.startAdvertising(uuid, major, minor, measuredPower);
+    try {
+        let conjestion = fs.readFileSync("../log.txt", 'utf-8');
+        console.log(conjestion);
+        let terms = conjestion.split(',');
+        let major = Number(terms[0] + terms[1] + terms[2]);
+        let minor = Number(terms[3]);
+        Bleacon.startAdvertising(uuid, major, minor, measuredPower);
+    }catch(e) {
+        //console.log("log.txtがありません");
+    }
 }, 5000)
 
